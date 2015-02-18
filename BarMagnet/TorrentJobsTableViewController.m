@@ -55,6 +55,34 @@ enum ORDER
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    NSLog(@"This is from the main view!");
+
+    // NSLog(@"We have this many clients: %d", [clientsArray count]);
+    // NSLog(@"Their content is %@", clientsArray);
+
+   NSMutableArray * clientsArray = [[NSUserDefaults.standardUserDefaults objectForKey:@"clients"] mutableCopy];
+   if (!clientsArray || [clientsArray count] == 0)
+       {
+
+       NSDictionary * mediaCenterServer = @{@"name":@"MediaCenter",
+                                      @"type":@"Transmission",
+                                      @"url":@"192.168.1.127",
+                                      @"port":@9091,
+                                      @"username":@"Boingo",
+                                      @"password":@"g0boingo",
+                                      @"use_ssl":@0,
+                                      @"relative_path":@"",
+                                      @"directory":@"",
+                                      @"label":@""};
+           NSArray * array = @[mediaCenterServer];
+       [NSUserDefaults.standardUserDefaults setObject: array forKey:@"clients"];
+        // NSLog(@"We'll be adding: %@", mediaCenterServer);
+
+       }
+
+
+
 	[TSMessage setDefaultViewController:self];
 	[self initialiseUploadDownloadLabels];
 	[self initialiseHeader];
@@ -490,7 +518,7 @@ enum ORDER
 	NSMutableArray *dictValues = [TorrentDelegate.sharedInstance.currentlySelectedClient.getJobsDict.allValues mutableCopy];
 	[self sortArray:dictValues];
 	self.sortedKeys = dictValues;
-	
+
 	return 1;
 }
 
@@ -549,7 +577,7 @@ enum ORDER
 	cell.name.text = currentJob[@"name"];
 	cell.hashString = currentJob[@"hash"];
 	cell.currentStatus.text = currentJob[@"status"];
-	
+
 	if ([CellIdentifier isEqual:@"Fast"])
 	{
 		[self addProgressViewToCell:cell withJob:currentJob];

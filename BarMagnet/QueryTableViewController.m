@@ -23,6 +23,27 @@
 {
 	[super viewDidLoad];
 	self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+	NSMutableArray * array = [[NSUserDefaults.standardUserDefaults objectForKey:@"queries"] mutableCopy];
+    if (!array || [array count] == 0)
+	{
+		// array = NSMutableArray.new;
+		NSDictionary * pirateBayHD = @{@"name":@"The Pirate Bay (720p)", @"query":@"https://thepiratebay.se/search/%query%%20720p/0/7/0", @"uses_query":@1};
+		NSDictionary * pirateBaySD = @{@"name":@"The Pirate Bay (All)", @"query":@"https://thepiratebay.se/search/%query%/0/7/0", @"uses_query":@1};
+		NSDictionary * kickassHD = @{@"name":@"Kickass Torrents (720p)", @"query":@"kickass.to/usearch/%query%%20720p", @"uses_query":@1};
+		NSDictionary * kickassSD = @{@"name":@"Kickass Torrents (All)", @"query":@"kickass.to/usearch/%query%", @"uses_query":@1};
+		NSDictionary * isohuntHD = @{@"name":@"Isohunt (720p)", @"query":@"https://isohunt.to/torrents/?ihq=%query%%20720p&Torrent_sort=seeders.desc", @"uses_query":@1};
+		NSDictionary * isohuntSD = @{@"name":@"Isohunt (All)", @"query":@"https://isohunt.to/torrents/?ihq=%query%&Torrent_sort=seeders.desc", @"uses_query":@1};
+        NSArray * newSites = @[pirateBayHD, pirateBaySD, kickassHD, kickassSD, isohuntHD, isohuntSD];
+//        [array addObjectsFromArray:(newSites)];
+//        [NSUserDefaults.standardUserDefaults setObject:array forKey:@"queries"];
+        [NSUserDefaults.standardUserDefaults setObject:newSites forKey:@"queries"];
+	}
+
+
+
+
+
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField_UniqueString *)textField
